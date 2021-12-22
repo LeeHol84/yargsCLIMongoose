@@ -5,40 +5,43 @@ exports.addMovie = async (movieObj) => {
   try {
     const newMovie = new Movie(movieObj);
     await newMovie.save();
+    console.log(`You have added ${movieObj.title} to the Movie database`)
     mongoose.disconnect();
   } catch (error) {
     console.log(error);
+    mongoose.disconnect();
   }
 };
 exports.updateMovie = async (movieObj) => {
   try {
-    const updateMovie = new Movie(movieObj);
-    await updateMovie.findByIdAndUpdate({});
-    await updateMovie.save();
+    await Movie.updateOne(movieObj);
+    console.log(`You have updated ${movieObj.title} in the Movie database`)
     mongoose.disconnect()
   } catch (error) {
     console.log(error);
+    mongoose.disconnect();
   }
 };
 
-exports.listMovie = async(movieObj) => {
+exports.listMovie = async() => {
   try {
-    const listMovie = new Movie(movieObj);
-    await listMovie.find({})
-    await listMovie.save()
+    const list = await Movie.find({})
+    console.log(list)
     mongoose.disconnect()
   } catch (error) {
     console.log(error);
+    mongoose.disconnect();
   }
 }
 
 exports.deleteMovie = async(movieObj) => {
   try {
-    const deleteMovie = new Movie(movieObj);
-    await deleteMovie.findByIdAndRemove({})
-    await deleteMovie.save()
+    
+    await Movie.deleteOne(movieObj)
+    console.log(`You have successfully deleted ${movieObj.title} from the Movie database`)
     mongoose.disconnect()
   } catch (error) {
     console.log(error);
+    mongoose.disconnect();
   }
 }
